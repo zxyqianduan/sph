@@ -1,5 +1,5 @@
 # 2024-8-26-sph
-
+尚硅谷前台项目尚品汇练习
 ## Project setup
 ```
 npm install
