@@ -6,10 +6,7 @@ module.exports = defineConfig({
     proxy: {
       '/api': {
         target: 'http://sph-h5-api.atguigu.cn/',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/api': ''
-        }
+        changeOrigin: true
       }
     }
   }
