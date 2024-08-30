@@ -1,7 +1,7 @@
 <template>
   <div class="footer">
     <div class="footer-container">
-      <div class="footerList">
+      <div class="footerList" v-if="!$route.meta['hidden']">
         <div class="footerItem">
           <h4>购物指南</h4>
           <ul class="footerItemCon">
@@ -104,7 +104,10 @@ export default {
   data () {
     return {}
   },
-  methods: {}
+  methods: {},
+  mounted () {
+    console.log(this)
+  }
 
 }
 

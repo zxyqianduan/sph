@@ -4,7 +4,7 @@ import 'nprogress/nprogress.css'
 
 const request = axios.create({
   baseURL: 'http://sph-h5-api.atguigu.cn/',
-  timeout: 1000,
+  timeout: 5000,
   headers: {
     'Content-Type': 'application/json'
   }
@@ -24,7 +24,7 @@ request.interceptors.request.use((config) => {
 request.interceptors.response.use((response) => {
   // 对响应数据做点什么
   NProgress.done()
-  return response
+  return response.data
 }, (error) => {
   // 对响应错误做点什么
   return Promise.reject(error)
