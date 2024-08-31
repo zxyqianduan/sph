@@ -1,0 +1,18 @@
+[
+    {
+        "id":"1",
+        "imgUrl":"https://shangguig-1258431239.cos.ap-beijing.myqcloud.com/banner1.jpg"
+    },
+    {
+        "id":"2",
+        "imgUrl":"https://shangguig-1258431239.cos.ap-beijing.myqcloud.com/banner2.jpg"
+    },
+    {
+        "id":"3",
+        "imgUrl":"https://shangguig-1258431239.cos.ap-beijing.myqcloud.com/banner3.jpg"
+    },
+    {
+        "id":"4",
+        "imgUrl":"https://shangguig-1258431239.cos.ap-beijing.myqcloud.com/banner4.jpg"
+    }
+]

@@ -104,9 +104,11 @@ export default {
   data () {
     return {}
   },
-  methods: {},
+  methods: {
+
+  },
   mounted () {
-    console.log(this)
+
   }
 
 }

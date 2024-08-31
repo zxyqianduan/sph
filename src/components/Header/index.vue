@@ -8,7 +8,7 @@
           <p>尚品汇欢迎您！</p>
           <p>
             <span>请</span>
-            <router-link  to="/login">登录</router-link>
+            <router-link to="/login">登录</router-link>
             <router-link to="/register" class="register">免费注册</router-link>
           </p>
         </div>
@@ -32,8 +32,9 @@
         </router-link>
       </h1>
       <div class="searchArea">
-        <form action="###" class="searchForm">
-          <input type="text" id="autocomplete" class="input-error input-xxlarge" />
+        <form @submit.prevent class="searchForm">
+          <input type="text" id="autocomplete" @keydown.enter="toSearch" class="input-error input-xxlarge"
+                 v-model.trim="keyword"/>
           <button class="sui-btn btn-xlarge btn-danger" type="button" @click="toSearch">搜索</button>
         </form>
       </div>
@@ -47,11 +48,30 @@ export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Header',
   data () {
-    return {}
+    return {
+      keyword: ''
+    }
   },
   methods: {
+
     toSearch () {
-      this.$router.push('/search')
+      // const keyword = {
+      //   keyword: this.keyword || undefined
+      // }
+      // this.$router.push({
+      //   path: '/search',
+      //   query: {
+      //     ...Object.assign({}, this.$route.query, keyword)
+      //   }
+      // })
+
+      this.$router.push({
+        path: '/search',
+        query: {
+          ...this.$route.query,
+          keyword: this.keyword || undefined
+        }
+      })
     }
   }
 
@@ -61,7 +81,7 @@ export default {
 
 <style lang="scss" scoped>
 .header {
-  &>.top {
+  & > .top {
     background-color: #eaeaea;
     height: 30px;
     line-height: 30px;
@@ -92,7 +112,7 @@ export default {
         a {
           padding: 0 10px;
 
-          &+a {
+          & + a {
             border-left: 1px solid #b3aeae;
           }
         }
@@ -102,7 +122,7 @@ export default {
     }
   }
 
-  &>.bottom {
+  & > .bottom {
     width: 1200px;
     margin: 0 auto;
     overflow: hidden;

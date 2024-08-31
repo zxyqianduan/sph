@@ -2,31 +2,35 @@
   <!-- 商品分类导航 -->
   <div class="type-nav">
     <div class="container">
-      <div class="nav-left">
-        <h2 class="all">全部商品分类</h2>
-        <div class="sort">
-          <div class="all-sort-list2" v-for="item in CategoryList" :key="item.categoryId">
-            <div class="item">
-              <h3>
-                <a href="">{{item.categoryName}}</a>
-              </h3>
-              <div class="item-list clearfix">
-                <div class="subitem" v-for="cate in item.categoryChild" :key="cate.categoryId">
-                  <dl class="fore">
-                    <dt>
-                      <a href="">{{cate.categoryName}}</a>
-                    </dt>
-                    <dd>
-                      <em v-for="cateitem in cate.categoryChild" :key="cateitem.categoryId">
-                        <a href="">{{cateitem.categoryName}}</a>
-                      </em>
-                    </dd>
-                  </dl>
+      <div class="nav-left" @mouseleave="show">
+        <h2 class="all" @mouseenter="isShow = true">全部商品分类</h2>
+        <transition
+          enter-active-class="animate__animated  animate__fadeIn"
+          leave-active-class="animate__animated animate__fadeOut">
+          <div v-show="isShow" class="sort">
+            <div class="all-sort-list2" @click="toSearch">
+              <div class="item" v-for="item in CategoryList" :key="item.categoryId">
+                <h3>
+                  <a :data-num="1" :data-id="item.categoryId">{{ item.categoryName }}</a>
+                </h3>
+                <div class="item-list clearfix">
+                  <div class="subitem" v-for="cate in item.categoryChild" :key="cate.categoryId">
+                    <dl class="fore">
+                      <dt>
+                        <a :data-num="2" :data-id="cate.categoryId">{{ cate.categoryName }}</a>
+                      </dt>
+                      <dd>
+                        <em v-for="cateitem in cate.categoryChild" :key="cateitem.categoryId">
+                          <a :data-num="3" :data-id="cateitem.categoryId">{{ cateitem.categoryName }}</a>
+                        </em>
+                      </dd>
+                    </dl>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </transition>
       </div>
       <nav class="nav">
         <a href="###">服装城</a>
@@ -49,11 +53,31 @@ export default {
   name: 'TypeNav',
   data () {
     return {
-
+      isShow: this.$route.path === '/home'
     }
   },
   methods: {
-
+    show () {
+      if (this.$route.path !== '/home') {
+        this.isShow = false
+      }
+    },
+    toSearch (e) {
+      const { id, num } = e.target.dataset
+      const { innerHTML } = e.target
+      const { keyword } = this.$route.query
+      // this.$router.push(`/search?category${num}Id=${id}&categoryName=${name}`)
+      if (id) {
+        this.$router.push({
+          path: '/search',
+          query: {
+            [`category${num}Id`]: id,
+            categoryName: innerHTML,
+            keyword
+          }
+        })
+      }
+    }
   },
   mounted () {
   },
@@ -95,6 +119,7 @@ export default {
     }
 
     .sort {
+      transition: 0.1s;
       position: absolute;
       left: 0;
       top: 45px;

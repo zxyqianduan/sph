@@ -1,17 +1,16 @@
 <template>
   <div>
-    <TypeNav />
-    <ListContainer />
-    <Recommend />
-    <Rank />
-    <Like />
-    <Floor />
-    <Brand />
+    <TypeNav/>
+    <ListContainer/>
+    <Recommend/>
+    <Rank/>
+    <Like/>
+    <Floor/>
+    <Brand/>
   </div>
 </template>
 
 <script>
-import TypeNav from '@/views/Home/TypeNav'
 import ListContainer from '@/views/Home/ListContainer'
 import Recommend from '@/views/Home/Recommend'
 import Rank from '@/views/Home/Rank'
@@ -24,7 +23,6 @@ export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Home',
   components: {
-    TypeNav,
     ListContainer,
     Recommend,
     Rank,

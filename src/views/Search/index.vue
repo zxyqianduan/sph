@@ -1,12 +1,10 @@
 <template>
   <div>
-  搜索
+  <TypeNav></TypeNav>
   </div>
 </template>
 
 <script>
-
-import { reqCategoryList } from '@/api/Home'
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -16,19 +14,9 @@ export default {
     }
   },
   methods: {
-    async getdata () {
-      // const res = await request.get('/api/product/getBaseCategoryList1')
-      // console.log(res)
-      try {
-        const res = await reqCategoryList()
-        console.log(res)
-      } catch (error) {
-        alert(error.message)
-      }
-    }
+
   },
   mounted () {
-    this.getdata()
   }
 
 }

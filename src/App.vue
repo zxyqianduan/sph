@@ -1,8 +1,10 @@
 <template>
   <div>
   <Header></Header>
+
     <router-view></router-view>
     <Footer></Footer>
+<!--    <Test></Test>-->
   </div>
 </template>
 
@@ -10,6 +12,7 @@
 
 import Footer from '@/components/Footer/index.vue'
 import Header from '@/components/Header/index.vue'
+// import Test from '@/views/Test/test.vue'
 export default {
   name: 'App',
   data () {
@@ -18,6 +21,7 @@ export default {
   components: {
     Footer,
     Header
+    // Test
   },
   methods: {}
 

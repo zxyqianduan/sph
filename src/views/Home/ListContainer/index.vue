@@ -6,25 +6,8 @@
         <!--banner轮播-->
         <div class="swiper-container" id="mySwiper">
           <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <img src="./images/banner1.jpg" />
-            </div>
-            <div class="swiper-slide">
-              <!-- <img src="./images/banner2.jpg" /> -->
-            </div>
-            <div class="swiper-slide">
-              <!-- <img src="./images/banner3.jpg" /> -->
-            </div>
-            <div class="swiper-slide">
-              <!-- <img src="./images/banner4.jpg" /> -->
-            </div>
+            <my-Swiper :swiperOption="swiperOption" :swiperList="swiperList"></my-Swiper>
           </div>
-          <!-- 如果需要分页器 -->
-          <div class="swiper-pagination"></div>
-
-          <!-- 如果需要导航按钮 -->
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
         </div>
       </div>
       <div class="right">
@@ -101,8 +84,47 @@
 </template>
 
 <script>
+
+import { mapActions, mapState } from 'vuex'
+
 export default {
-  name: 'ListEl'
+  name: 'ListEl',
+  data () {
+    return {
+      swiperList: [
+        require('@/assets/images/home/banner1.jpg'),
+        require('@/assets/images/home/banner2.jpg'),
+        require('@/assets/images/home/banner3.jpg'),
+        require('@/assets/images/home/banner4.jpg')
+      ],
+      swiperOption: {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        loop: true,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true
+        },
+        autoplay: {
+          delay: 2000,
+          disableOnInteraction: false
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev'
+        }
+      }
+    }
+  },
+  methods: {
+    ...mapActions('home', ['getSwiper'])
+  },
+  mounted () {
+    this.getSwiper()
+  },
+  computed: {
+    ...mapState('home', ['SwiperList'])
+  }
 }
 </script>
 
