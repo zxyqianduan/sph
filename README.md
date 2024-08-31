@@ -1,14 +1,14 @@
 # 2024-8-26-sph
-尚硅谷前台项目尚品汇商城练习
-接口文档地址：https://www.showdoc.com.cn/2077491945864902/9419696081183301
-项目技术栈：Vue2 + Vuex3 + Swiper + Mock + axios + Vue-router3 + animate.css
-此项目你可以练习到：
-搜索功能
-轮播图
-多层嵌套渲染
-支付功能
-组件通讯传参
-增删改查
+尚硅谷前台项目尚品汇商城练习<br>
+接口文档地址：https://www.showdoc.com.cn/2077491945864902/9419696081183301<br>
+项目技术栈：Vue2 + Vuex3 + Swiper + Mock + axios + Vue-router3 + animate.css<br>
+此项目你可以练习到：<br>
+搜索功能<br>
+轮播图<br>
+多层嵌套渲染<br>
+支付功能<br>
+组件通讯传参<br>
+增删改查<br>
 mock模拟数据 等。。。
 ## Project setup
 ```
