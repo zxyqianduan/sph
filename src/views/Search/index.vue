@@ -8,7 +8,7 @@
         <div class="bread">
           <ul class="fl sui-breadcrumb">
             <li>
-              <span href="#">全部结果</span>
+              <span>全部结果</span>
             </li>
           </ul>
           <ul class="fl sui-tag">
@@ -20,7 +20,7 @@
         </div>
 
         <!-- 搜索器 -->
-        <SearchSelector/>
+        <SearchSelector @getprops="getprops" @getTrademark="getTrademark"/>
 
         <!--商品展示区-->
         <div class="details clearfix">
@@ -52,21 +52,19 @@
           <!-- 商品列表 -->
           <div class="goods-list">
             <ul class="yui3-g">
-              <li class="yui3-u-1-5">
+              <li class="yui3-u-1-5" v-for="item in goodsList" :key="item.id">
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a href="item.html" target="_blank"><img src="./images/mobile01.png"/></a>
+                    <a><img :src="item.defaultImg" alt=""/></a>
                   </div>
                   <div class="price">
                     <strong>
                       <em>¥</em>
-                      <i>6088.00</i>
+                      <i>{{item.price}}</i>
                     </strong>
                   </div>
                   <div class="attr">
-                    <a target="_blank" href="item.html"
-                       title="促销信息，下单即赠送三个月CIBN视频会员卡！【小米电视新品4A 58 火爆预约中】">Apple苹果iPhone
-                      6s (A1699)Apple苹果iPhone 6s (A1699)Apple苹果iPhone 6s (A1699)Apple苹果iPhone 6s (A1699)</a>
+                    <a :title="item.title">{{item.title}}</a>
                   </div>
                   <div class="commit">
                     <i class="command">已有<span>2000</span>人评价</i>
@@ -113,12 +111,58 @@
 
 <script>
 import SearchSelector from './SearchSelector'
+import { mapState } from 'vuex'
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Search',
   components: {
     SearchSelector
+  },
+  data () {
+    return {
+      // 搜素参数
+      searchparams: {
+        category1id: '', // 一级分类id(可选参数）
+        categpry2id: '', // 二级分类id(可选参数）
+        category3id: '', // 三级分类id(可选参数）
+        categoryname: '', // 分类名（可选参数）
+        keyword: '', // 关键词（可选参数）
+        props: [], // 商品属性（可选参数）
+        trademark: '', // //品牌（可选参数）
+        order: '', // 排序（可选参数）
+        pageno: 1, // 当前页码（必选项！!!!!!)
+        pagesize: 10// 每页展示多少条（必选项！
+      }
+    }
+  },
+  methods: {
+    getTrademark (value) {
+      this.searchparams.trademark = value
+    },
+    getprops (value) {
+      this.searchparams.props = value
+    }
+  },
+  mounted () {
+    this.$store.dispatch('search/getSearchList', this.searchparams)
+  },
+  watch: {
+    $route: {
+      handler (newVal) {
+        Object.assign(this.searchparams, newVal.query)
+      },
+      immediate: true
+    },
+    searchparams: {
+      handler () {
+        this.$store.dispatch('search/getSearchList', this.searchparams)
+      },
+      deep: true
+    }
+  },
+  computed: {
+    ...mapState('search', ['goodsList'])
   }
 }
 </script>

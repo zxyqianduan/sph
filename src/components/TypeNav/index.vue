@@ -71,7 +71,7 @@ export default {
         this.$router.push({
           path: '/search',
           query: {
-            [`category${num}Id`]: id,
+            [`category${num}id`]: id,
             categoryName: innerHTML,
             keyword
           }
