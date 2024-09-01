@@ -69,7 +69,11 @@
           <!-- 商品列表 -->
           <div class="goods-list">
             <ul class="yui3-g">
-              <li class="yui3-u-1-5" v-for="item in goodsList" :key="item.id">
+              <li
+                class="yui3-u-1-5"
+                v-for="item in searchInfo.goodsList"
+                :key="item.id"
+              >
                 <div class="list-wrap">
                   <div class="p-img">
                     <a><img :src="item.defaultImg" alt="" /></a>
@@ -123,7 +127,14 @@
               <div><span>共10页&nbsp;</span></div>
             </div>
           </div> -->
-          <VPagination :total="total"></VPagination>
+          <VPagination
+            :total="searchInfo.total"
+            :pageSize="searchInfo.pageSize"
+            :pageNo="searchInfo.pageNo"
+            :continues="searchInfo.continues"
+            @pageNum="pageNum"
+          >
+          </VPagination>
         </div>
       </div>
     </div>
@@ -142,7 +153,6 @@ export default {
   },
   data() {
     return {
-      total:100,
       // 搜素参数
       searchparams: {
         category1Id: "", // 一级分类id(可选参数）
@@ -161,13 +171,17 @@ export default {
   methods: {
     getTrademark(value) {
       this.searchparams.trademark = value;
+      this.searchparams.pageNo = 1;
     },
     getprops(value) {
-      this.searchparams.props = value;
-      this.searchparams.props = new Set(this.searchparams.props);
+      if(this.searchparams.props.indexOf(value) == -1){
+        this.searchparams.props.push(value)
+      }
+      this.searchparams.pageNo = 1;
     },
     deleteCategoryName() {
       const { keyword } = this.$route.query;
+      this.searchparams.pageNo = 1;
       this.$router.push({
         path: "/search",
         query: {
@@ -177,6 +191,7 @@ export default {
     },
     deleteKeyword() {
       const { keyword, ...params } = this.$route.query;
+      this.searchparams.pageNo = 1;
       this.$router.push({
         path: "/search",
         query: {
@@ -186,6 +201,7 @@ export default {
     },
     deleteTrademark() {
       this.searchparams.trademark = undefined;
+      this.searchparams.pageNo = 1;
     },
     getorder(e) {
       if (e.target.innerHTML == "综合") {
@@ -198,7 +214,11 @@ export default {
       }
     },
     deleteProps(index) {
+      this.searchparams.pageNo = 1;
       this.searchparams.props.splice(index, 1);
+    },
+    pageNum(num) {
+      this.searchparams.pageNo = num;
     },
   },
   mounted() {},
@@ -212,6 +232,7 @@ export default {
           categoryName: "", // 分类名（可选参数）
           keyword: "", // 关键词（可选参数）
         };
+        this.searchparams.pageNo = 1;
         Object.assign(this.searchparams, resetParams, newVal.query);
       },
       immediate: true,
@@ -225,7 +246,7 @@ export default {
     },
   },
   computed: {
-    ...mapState("search", ["goodsList"]),
+    ...mapState("search", ["searchInfo"]),
   },
 };
 </script>

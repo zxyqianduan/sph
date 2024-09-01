@@ -7,7 +7,7 @@
         <ul
           class="logo-list"
           @click="getTrademark($event, trand.tmId)"
-          v-for="trand in trademarkList"
+          v-for="trand in searchInfo.trademarkList"
           :key="trand.tmId"
         >
           <li>{{ trand.tmName }}</li>
@@ -17,7 +17,7 @@
     <div>
       <div
         class="type-wrap"
-        v-for="item in attrsList"
+        v-for="item in searchInfo.attrsList"
         :key="item.id"
       >
         <div class="fl key">{{ item.attrName }}</div>
@@ -46,7 +46,7 @@ export default {
   data() {
     return {
       trademark: "",
-      attribute: [],
+      attribute: ''
     };
   },
   methods: {
@@ -55,12 +55,12 @@ export default {
       this.$emit("getTrademark", this.trademark);
     },
     getprops(e, attrId, attrName) {
-      this.attribute.push(`${attrId}:${e.target.innerHTML}:${attrName}`);
+      this.attribute = `${attrId}:${e.target.innerHTML}:${attrName}`
       this.$emit("getprops", this.attribute);
     },
   },
   computed: {
-    ...mapState("search", ["attrsList", "trademarkList"]),
+    ...mapState("search", ["searchInfo"]),
   },
   mounted() {},
 };
