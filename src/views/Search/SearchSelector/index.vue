@@ -4,18 +4,31 @@
     <div class="type-wrap logo">
       <div class="fl key brand">品牌</div>
       <div class="value logos">
-        <ul class="logo-list" @click="getTrademark" v-for="trand in trademarkList" :key="trand.tmId">
-          <li>{{trand.tmName}}</li>
+        <ul
+          class="logo-list"
+          @click="getTrademark($event, trand.tmId)"
+          v-for="trand in trademarkList"
+          :key="trand.tmId"
+        >
+          <li>{{ trand.tmName }}</li>
         </ul>
       </div>
     </div>
-    <div @click="getprops">
-      <div class="type-wrap" v-for="item in attrsList" :key="item.id">
-        <div class="fl key">{{item.attrName}}</div>
+    <div>
+      <div
+        class="type-wrap"
+        v-for="item in attrsList"
+        :key="item.id"
+      >
+        <div class="fl key">{{ item.attrName }}</div>
         <div class="fl value">
-          <ul class="type-list" v-for="(item2,index) in item.attrValueList" :key="index">
+          <ul
+            class="type-list"
+            v-for="(item2, index) in item.attrValueList"
+            :key="index"
+          >
             <li>
-              <a>{{item2}}</a>
+              <a @click="getprops($event, item.attrId, item.attrName)">{{ item2 }}</a>
             </li>
           </ul>
         </div>
@@ -26,33 +39,31 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 
 export default {
-  name: 'SearchSelector',
-  data () {
+  name: "SearchSelector",
+  data() {
     return {
-      trademark: '',
-      attribute: []
-    }
+      trademark: "",
+      attribute: [],
+    };
   },
   methods: {
-    getTrademark (e) {
-      this.trademark = e.target.innerHTML
-      this.$emit('getTrademark', this.trademark)
+    getTrademark(e, id) {
+      this.trademark = `${id}:${e.target.innerHTML}`
+      this.$emit("getTrademark", this.trademark);
     },
-    getprops (e) {
-      this.attribute.push(e.target.innerHTML)
-      this.$emit('getprops', this.attribute)
-    }
+    getprops(e, attrId, attrName) {
+      this.attribute.push(`${attrId}:${e.target.innerHTML}:${attrName}`);
+      this.$emit("getprops", this.attribute);
+    },
   },
   computed: {
-    ...mapState('search', ['attrsList', 'trademarkList'])
+    ...mapState("search", ["attrsList", "trademarkList"]),
   },
-  mounted () {
-
-  }
-}
+  mounted() {},
+};
 </script>
 
 <style lang="scss" scoped>

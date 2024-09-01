@@ -9,7 +9,7 @@
 </template>
 
 <script>
-
+import { mapActions } from 'vuex'
 import Footer from '@/components/Footer/index.vue'
 import Header from '@/components/Header/index.vue'
 // import Test from '@/views/Test/test.vue'
@@ -23,7 +23,12 @@ export default {
     Header
     // Test
   },
-  methods: {}
+  methods: {
+    ...mapActions('home', ['getCategory'])
+  },
+  mounted () {
+    this.getCategory()
+  }
 
 }
 

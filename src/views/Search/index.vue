@@ -1,7 +1,7 @@
 <template>
   <div class="outer">
     <!-- 三级分类导航 -->
-    <TypeNav/>
+    <TypeNav />
     <div class="main">
       <div class="py-container">
         <!--面包屑导航-->
@@ -12,39 +12,56 @@
             </li>
           </ul>
           <ul class="fl sui-tag">
-            <li class="with-x">手机</li>
-            <li class="with-x">iphone<i>×</i></li>
-            <li class="with-x">华为<i>×</i></li>
-            <li class="with-x">OPPO<i>×</i></li>
+            <li class="with-x" v-if="searchparams.trademark">
+              {{ searchparams.trademark.split(":")[1] }}
+              <i @click="deleteTrademark">x</i>
+            </li>
+            <li class="with-x" v-if="searchparams.categoryName">
+              {{ searchparams.categoryName }}
+              <i @click="deleteCategoryName">x</i>
+            </li>
+            <li class="with-x" v-if="searchparams.keyword">
+              {{ searchparams.keyword }}
+              <i @click="deleteKeyword">x</i>
+            </li>
+            <li
+              class="with-x"
+              v-if="searchparams.props"
+              v-for="(item, index) in searchparams.props"
+              :key="index"
+            >
+              {{ item.split(":")[1] }}
+              <i @click="deleteProps(index)">x</i>
+            </li>
           </ul>
         </div>
 
         <!-- 搜索器 -->
-        <SearchSelector @getprops="getprops" @getTrademark="getTrademark"/>
+        <SearchSelector @getprops="getprops" @getTrademark="getTrademark" />
 
         <!--商品展示区-->
         <div class="details clearfix">
           <!-- 列表操作区 -->
           <div class="sui-navbar">
-            <div class="navbar-inner filter">
+            <div class="navbar-inner filter" @click="getorder">
               <ul class="sui-nav">
                 <li class="active">
-                  <a href="#">综合</a>
+                  <a>综合</a>
                 </li>
                 <li>
-                  <a href="#">销量</a>
+                  <a>销量</a>
                 </li>
                 <li>
-                  <a href="#">新品</a>
+                  <a>新品</a>
                 </li>
                 <li>
-                  <a href="#">评价</a>
+                  <a>评价</a>
                 </li>
                 <li>
-                  <a href="#">价格⬆</a>
+                  <a data-flag="asc">价格⬆</a>
                 </li>
                 <li>
-                  <a href="#">价格⬇</a>
+                  <a data-flag="desc">价格⬇</a>
                 </li>
               </ul>
             </div>
@@ -55,26 +72,29 @@
               <li class="yui3-u-1-5" v-for="item in goodsList" :key="item.id">
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a><img :src="item.defaultImg" alt=""/></a>
+                    <a><img :src="item.defaultImg" alt="" /></a>
                   </div>
                   <div class="price">
                     <strong>
                       <em>¥</em>
-                      <i>{{item.price}}</i>
+                      <i>{{ item.price }}</i>
                     </strong>
                   </div>
                   <div class="attr">
-                    <a :title="item.title">{{item.title}}</a>
+                    <a :title="item.title">{{ item.title }}</a>
                   </div>
                   <div class="commit">
-                    <i class="command">已有<span>2000</span>人评价</i>
+                    <i class="command"
+                      >已有<span>{{ item.price }}</span
+                      >人评价</i
+                    >
                   </div>
                 </div>
               </li>
             </ul>
           </div>
           <!-- 分页器 -->
-          <div class="fr page">
+          <!-- <div class="fr page">
             <div class="sui-pagination clearfix">
               <ul>
                 <li class="prev disabled">
@@ -102,7 +122,8 @@
               </ul>
               <div><span>共10页&nbsp;</span></div>
             </div>
-          </div>
+          </div> -->
+          <VPagination :total="total"></VPagination>
         </div>
       </div>
     </div>
@@ -110,61 +131,103 @@
 </template>
 
 <script>
-import SearchSelector from './SearchSelector'
-import { mapState } from 'vuex'
+import SearchSelector from "./SearchSelector";
+import { mapState } from "vuex";
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
-  name: 'Search',
+  name: "Search",
   components: {
-    SearchSelector
+    SearchSelector,
   },
-  data () {
+  data() {
     return {
+      total:100,
       // 搜素参数
       searchparams: {
-        category1id: '', // 一级分类id(可选参数）
-        categpry2id: '', // 二级分类id(可选参数）
-        category3id: '', // 三级分类id(可选参数）
-        categoryname: '', // 分类名（可选参数）
-        keyword: '', // 关键词（可选参数）
+        category1Id: "", // 一级分类id(可选参数）
+        categpry2Id: "", // 二级分类id(可选参数）
+        category3Id: "", // 三级分类id(可选参数）
+        categoryName: "", // 分类名（可选参数）
+        keyword: "", // 关键词（可选参数）
         props: [], // 商品属性（可选参数）
-        trademark: '', // //品牌（可选参数）
-        order: '', // 排序（可选参数）
-        pageno: 1, // 当前页码（必选项！!!!!!)
-        pagesize: 10// 每页展示多少条（必选项！
-      }
-    }
+        trademark: "", // //品牌（可选参数）
+        order: "", // 排序（可选参数）
+        pageNo: 1, // 当前页码（必选项！!!!!!)
+        pageSize: 10, // 每页展示多少条（必选项！
+      },
+    };
   },
   methods: {
-    getTrademark (value) {
-      this.searchparams.trademark = value
+    getTrademark(value) {
+      this.searchparams.trademark = value;
     },
-    getprops (value) {
-      this.searchparams.props = value
-    }
+    getprops(value) {
+      this.searchparams.props = value;
+      this.searchparams.props = new Set(this.searchparams.props);
+    },
+    deleteCategoryName() {
+      const { keyword } = this.$route.query;
+      this.$router.push({
+        path: "/search",
+        query: {
+          keyword,
+        },
+      });
+    },
+    deleteKeyword() {
+      const { keyword, ...params } = this.$route.query;
+      this.$router.push({
+        path: "/search",
+        query: {
+          ...params,
+        },
+      });
+    },
+    deleteTrademark() {
+      this.searchparams.trademark = undefined;
+    },
+    getorder(e) {
+      if (e.target.innerHTML == "综合") {
+        this.searchparams.order = `1:${e.target.innerHTML}`;
+        log(this.searchparams);
+      } else if (e.target.innerHTML == "价格⬆") {
+        this.searchparams.order = `2:${e.target.dataset.flag}`;
+      } else if (e.target.innerHTML == "价格⬇") {
+        this.searchparams.order = `2:${e.target.dataset.flag}`;
+      }
+    },
+    deleteProps(index) {
+      this.searchparams.props.splice(index, 1);
+    },
   },
-  mounted () {
-    this.$store.dispatch('search/getSearchList', this.searchparams)
-  },
+  mounted() {},
   watch: {
     $route: {
-      handler (newVal) {
-        Object.assign(this.searchparams, newVal.query)
+      handler(newVal) {
+        const resetParams = {
+          category1Id: "", // 一级分类id(可选参数）
+          categpry2Id: "", // 二级分类id(可选参数）
+          category3Id: "", // 三级分类id(可选参数）
+          categoryName: "", // 分类名（可选参数）
+          keyword: "", // 关键词（可选参数）
+        };
+        Object.assign(this.searchparams, resetParams, newVal.query);
       },
-      immediate: true
+      immediate: true,
     },
     searchparams: {
-      handler () {
-        this.$store.dispatch('search/getSearchList', this.searchparams)
+      handler() {
+        this.$store.dispatch("search/getSearchList", this.searchparams);
       },
-      deep: true
-    }
+      deep: true,
+      immediate: true,
+    },
   },
   computed: {
-    ...mapState('search', ['goodsList'])
-  }
-}
+    ...mapState("search", ["goodsList"]),
+  },
+};
 </script>
 
 <style lang="scss" scoped>

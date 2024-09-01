@@ -72,6 +72,7 @@ export default {
           keyword: this.keyword || undefined
         }
       })
+      this.keyword = undefined
     }
   }
 

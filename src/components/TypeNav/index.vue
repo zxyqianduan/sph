@@ -66,16 +66,16 @@ export default {
       const { id, num } = e.target.dataset
       const { innerHTML } = e.target
       const { keyword } = this.$route.query
-      // this.$router.push(`/search?category${num}Id=${id}&categoryName=${name}`)
       if (id) {
         this.$router.push({
           path: '/search',
           query: {
-            [`category${num}id`]: id,
+            [`category${num}Id`]: id,
             categoryName: innerHTML,
             keyword
           }
         })
+        this.isShow = false
       }
     }
   },
@@ -119,7 +119,7 @@ export default {
     }
 
     .sort {
-      transition: 0.1s;
+      transition: 0.05s;
       position: absolute;
       left: 0;
       top: 45px;

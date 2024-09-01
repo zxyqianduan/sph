@@ -24,7 +24,11 @@ export default {
     SwiperSlide
   },
   props: {
-    swiperList: Array,
+    swiperList: {
+      type: Array,
+      required: true,
+      default: () => []
+    },
     swiperOption: Object
   },
   data () {
