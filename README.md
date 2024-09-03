@@ -11,6 +11,7 @@
 组件通讯传参<br>
 增删改查<br>
 mock模拟数据 等。。。
+![alt text](image.png)
 ## Project setup
 ```
 pnpm install

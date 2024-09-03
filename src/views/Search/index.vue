@@ -43,31 +43,35 @@
         <div class="details clearfix">
           <!-- 列表操作区 -->
           <div class="sui-navbar">
-            <div class="navbar-inner filter" @click="getorder">
+            <div class="navbar-inner filter">
               <ul class="sui-nav">
-                <li class="active">
-                  <a>综合</a>
+                <li
+                  :class="{ active: orderType === '1' }"
+                  @click="orderData('1')"
+                >
+                  <a
+                    >综合<span
+                      v-show="orderType === '1'"
+                      :class="orderSort"
+                    ></span>
+                  </a>
                 </li>
-                <li>
-                  <a>销量</a>
-                </li>
-                <li>
-                  <a>新品</a>
-                </li>
-                <li>
-                  <a>评价</a>
-                </li>
-                <li>
-                  <a data-flag="asc">价格⬆</a>
-                </li>
-                <li>
-                  <a data-flag="desc">价格⬇</a>
+                <li
+                  :class="{ active: orderType === '2' }"
+                  @click="orderData('2')"
+                >
+                  <a
+                    >价格<span
+                      v-show="orderType === '2'"
+                      :class="orderSort"
+                    ></span>
+                  </a>
                 </li>
               </ul>
             </div>
           </div>
           <!-- 商品列表 -->
-          <div class="goods-list">
+          <div v-if="searchInfo.goodsList.length > 0" class="goods-list">
             <ul class="yui3-g">
               <li
                 class="yui3-u-1-5"
@@ -96,6 +100,11 @@
                 </div>
               </li>
             </ul>
+          </div>
+
+          <div v-else class="goods-kong">
+            <img src="./images/image.png" alt="" />
+            <h1>搜索商品结果为空</h1>
           </div>
           <!-- 分页器 -->
           <!-- <div class="fr page">
@@ -162,10 +171,10 @@ export default {
         keyword: "", // 关键词（可选参数）
         props: [], // 商品属性（可选参数）
         trademark: "", // //品牌（可选参数）
-        order: "", // 排序（可选参数）
+        order: "1:desc", // 排序（可选参数）
         pageNo: 1, // 当前页码（必选项！!!!!!)
         pageSize: 10, // 每页展示多少条（必选项！
-      },
+      }
     };
   },
   methods: {
@@ -174,8 +183,8 @@ export default {
       this.searchparams.pageNo = 1;
     },
     getprops(value) {
-      if(this.searchparams.props.indexOf(value) == -1){
-        this.searchparams.props.push(value)
+      if (this.searchparams.props.indexOf(value) == -1) {
+        this.searchparams.props.push(value);
       }
       this.searchparams.pageNo = 1;
     },
@@ -203,22 +212,33 @@ export default {
       this.searchparams.trademark = undefined;
       this.searchparams.pageNo = 1;
     },
-    getorder(e) {
-      if (e.target.innerHTML == "综合") {
-        this.searchparams.order = `1:${e.target.innerHTML}`;
-        log(this.searchparams);
-      } else if (e.target.innerHTML == "价格⬆") {
-        this.searchparams.order = `2:${e.target.dataset.flag}`;
-      } else if (e.target.innerHTML == "价格⬇") {
-        this.searchparams.order = `2:${e.target.dataset.flag}`;
-      }
-    },
     deleteProps(index) {
       this.searchparams.pageNo = 1;
       this.searchparams.props.splice(index, 1);
     },
     pageNum(num) {
       this.searchparams.pageNo = num;
+    },
+    orderData(type) {
+      const [ordertype, ordersort] = this.searchparams.order.split(":");
+
+      if (ordertype === type) {
+        this.searchparams.order =
+          ordersort == "desc" ? `${type}:asc` : `${type}:desc`;
+      } else {
+        this.searchparams.order = `${type}:desc`;
+      }
+    },
+  },
+  computed: {
+    ...mapState("search", ["searchInfo"]),
+    orderType() {
+      return this.searchparams.order.split(":")[0];
+    },
+    orderSort() {
+      return this.searchparams.order.split(":")[1] == "desc"
+        ? "iconfont icon-shangjiantou-"
+        : "iconfont icon-xiajiantou";
     },
   },
   mounted() {},
@@ -244,10 +264,7 @@ export default {
       deep: true,
       immediate: true,
     },
-  },
-  computed: {
-    ...mapState("search", ["searchInfo"]),
-  },
+  }
 };
 </script>
 
@@ -491,6 +508,16 @@ export default {
               }
             }
           }
+        }
+      }
+
+      .goods-kong {
+        margin: 20px auto;
+        width: 100%;
+        text-align: center;
+        img {
+          width: 20%;
+          height: 20%;
         }
       }
 
