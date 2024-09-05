@@ -78,7 +78,7 @@
                 v-for="item in searchInfo.goodsList"
                 :key="item.id"
               >
-                <div class="list-wrap">
+                <div class="list-wrap" @click="toDetail(item.id)">
                   <div class="p-img">
                     <a><img :src="item.defaultImg" alt="" /></a>
                   </div>
@@ -106,36 +106,6 @@
             <img src="./images/image.png" alt="" />
             <h1>搜索商品结果为空</h1>
           </div>
-          <!-- 分页器 -->
-          <!-- <div class="fr page">
-            <div class="sui-pagination clearfix">
-              <ul>
-                <li class="prev disabled">
-                  <a href="#">«上一页</a>
-                </li>
-                <li class="active">
-                  <a href="#">1</a>
-                </li>
-                <li>
-                  <a href="#">2</a>
-                </li>
-                <li>
-                  <a href="#">3</a>
-                </li>
-                <li>
-                  <a href="#">4</a>
-                </li>
-                <li>
-                  <a href="#">5</a>
-                </li>
-                <li class="dotted"><span>...</span></li>
-                <li class="next">
-                  <a href="#">下一页»</a>
-                </li>
-              </ul>
-              <div><span>共10页&nbsp;</span></div>
-            </div>
-          </div> -->
           <VPagination
             :total="searchInfo.total"
             :pageSize="searchInfo.pageSize"
@@ -151,121 +121,126 @@
 </template>
 
 <script>
-import SearchSelector from "./SearchSelector";
-import { mapState } from "vuex";
+import SearchSelector from './SearchSelector'
+import { mapState } from 'vuex'
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
-  name: "Search",
+  name: 'Search',
   components: {
-    SearchSelector,
+    SearchSelector
   },
-  data() {
+  data () {
     return {
       // 搜素参数
       searchparams: {
-        category1Id: "", // 一级分类id(可选参数）
-        categpry2Id: "", // 二级分类id(可选参数）
-        category3Id: "", // 三级分类id(可选参数）
-        categoryName: "", // 分类名（可选参数）
-        keyword: "", // 关键词（可选参数）
+        category1Id: '', // 一级分类id(可选参数）
+        categpry2Id: '', // 二级分类id(可选参数）
+        category3Id: '', // 三级分类id(可选参数）
+        categoryName: '', // 分类名（可选参数）
+        keyword: '', // 关键词（可选参数）
         props: [], // 商品属性（可选参数）
-        trademark: "", // //品牌（可选参数）
-        order: "1:desc", // 排序（可选参数）
+        trademark: '', // //品牌（可选参数）
+        order: '1:desc', // 排序（可选参数）
         pageNo: 1, // 当前页码（必选项！!!!!!)
-        pageSize: 10, // 每页展示多少条（必选项！
+        pageSize: 10 // 每页展示多少条（必选项！
       }
-    };
+    }
   },
   methods: {
-    getTrademark(value) {
-      this.searchparams.trademark = value;
-      this.searchparams.pageNo = 1;
+    getTrademark (value) {
+      this.searchparams.trademark = value
+      this.searchparams.pageNo = 1
     },
-    getprops(value) {
-      if (this.searchparams.props.indexOf(value) == -1) {
-        this.searchparams.props.push(value);
+    getprops (value) {
+      if (this.searchparams.props.indexOf(value) === -1) {
+        this.searchparams.props.push(value)
       }
-      this.searchparams.pageNo = 1;
+      this.searchparams.pageNo = 1
     },
-    deleteCategoryName() {
-      const { keyword } = this.$route.query;
-      this.searchparams.pageNo = 1;
+    deleteCategoryName () {
+      const { keyword } = this.$route.query
+      this.searchparams.pageNo = 1
       this.$router.push({
-        path: "/search",
+        path: '/search',
         query: {
-          keyword,
-        },
-      });
+          keyword
+        }
+      })
     },
-    deleteKeyword() {
-      const { keyword, ...params } = this.$route.query;
-      this.searchparams.pageNo = 1;
+    deleteKeyword () {
+      const { keyword, ...params } = this.$route.query
+      this.searchparams.pageNo = 1
       this.$router.push({
-        path: "/search",
+        path: '/search',
         query: {
-          ...params,
-        },
-      });
+          ...params
+        }
+      })
     },
-    deleteTrademark() {
-      this.searchparams.trademark = undefined;
-      this.searchparams.pageNo = 1;
+    deleteTrademark () {
+      this.searchparams.trademark = undefined
+      this.searchparams.pageNo = 1
     },
-    deleteProps(index) {
-      this.searchparams.pageNo = 1;
-      this.searchparams.props.splice(index, 1);
+    deleteProps (index) {
+      this.searchparams.pageNo = 1
+      this.searchparams.props.splice(index, 1)
     },
-    pageNum(num) {
-      this.searchparams.pageNo = num;
+    pageNum (num) {
+      this.searchparams.pageNo = num
     },
-    orderData(type) {
-      const [ordertype, ordersort] = this.searchparams.order.split(":");
+    orderData (type) {
+      const [ordertype, ordersort] = this.searchparams.order.split(':')
 
       if (ordertype === type) {
         this.searchparams.order =
-          ordersort == "desc" ? `${type}:asc` : `${type}:desc`;
+          ordersort === 'desc' ? `${type}:asc` : `${type}:desc`
       } else {
-        this.searchparams.order = `${type}:desc`;
+        this.searchparams.order = `${type}:desc`
       }
     },
+    toDetail (id) {
+      this.$router.push({
+        path: `/detail/${id}`
+      })
+    }
   },
   computed: {
-    ...mapState("search", ["searchInfo"]),
-    orderType() {
-      return this.searchparams.order.split(":")[0];
+    ...mapState('search', ['searchInfo']),
+    orderType () {
+      return this.searchparams.order.split(':')[0]
     },
-    orderSort() {
-      return this.searchparams.order.split(":")[1] == "desc"
-        ? "iconfont icon-shangjiantou-"
-        : "iconfont icon-xiajiantou";
-    },
+    orderSort () {
+      return this.searchparams.order.split(':')[1] === 'desc'
+        ? 'iconfont icon-shangjiantou-'
+        : 'iconfont icon-xiajiantou'
+    }
   },
-  mounted() {},
+  mounted () {},
   watch: {
     $route: {
-      handler(newVal) {
+      handler (newVal) {
         const resetParams = {
-          category1Id: "", // 一级分类id(可选参数）
-          categpry2Id: "", // 二级分类id(可选参数）
-          category3Id: "", // 三级分类id(可选参数）
-          categoryName: "", // 分类名（可选参数）
-          keyword: "", // 关键词（可选参数）
-        };
-        this.searchparams.pageNo = 1;
-        Object.assign(this.searchparams, resetParams, newVal.query);
+          category1Id: '', // 一级分类id(可选参数）
+          categpry2Id: '', // 二级分类id(可选参数）
+          category3Id: '', // 三级分类id(可选参数）
+          categoryName: '', // 分类名（可选参数）
+          keyword: '' // 关键词（可选参数）
+        }
+        this.searchparams.pageNo = 1
+        Object.assign(this.searchparams, resetParams, newVal.query)
       },
-      immediate: true,
+      immediate: true
     },
     searchparams: {
-      handler() {
-        this.$store.dispatch("search/getSearchList", this.searchparams);
+      handler () {
+        this.$store.dispatch('search/getSearchList', this.searchparams)
       },
       deep: true,
-      immediate: true,
-    },
+      immediate: true
+    }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

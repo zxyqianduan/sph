@@ -3,7 +3,7 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
 const request = axios.create({
-  baseURL: 'http://sph-h5-api.atguigu.cn/',
+  baseURL: 'http://139.198.104.58:8200/',
   timeout: 5000,
   headers: {
     'Content-Type': 'application/json'

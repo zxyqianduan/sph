@@ -1,6 +1,7 @@
 import Mock from 'mockjs'
 import swiper from '@/Mock/swiper.json'
 import floor from '@/Mock/floor.json'
+import spuData from '@/Mock/spuSale.json'
 
 // mock模拟数据，mock是一个js文件不是vue插件不需要use使用
 // 参数一：请求地址
@@ -12,3 +13,5 @@ Mock.mock('http://www.test.com/swiper', 'get', swiper)
 
 // 模拟楼层数据
 Mock.mock('http://www.test.com/floor', 'get', floor)
+
+Mock.mock('http://www.test.com/spuData', 'get', spuData)

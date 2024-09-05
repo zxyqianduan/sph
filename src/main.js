@@ -15,6 +15,9 @@ Vue.use(plugins)
 Vue.config.productionTip = false
 
 new Vue({
+  beforeCreate () {
+    Vue.prototype.$eventBus = this
+  },
   router,
   store,
   render: h => h(App)

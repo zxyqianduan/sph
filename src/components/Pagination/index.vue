@@ -9,7 +9,7 @@
       v-for="(item, index) in startEnd.end - startEnd.start + 1"
       :key="index"
       @click="pageNum(startEnd.start + index)"
-    > 
+    >
       {{ startEnd.start + index }}
     </button>
 
@@ -23,68 +23,68 @@
 
 <script>
 export default {
-  name: "VPagination",
+  name: 'VPagination',
   props: {
     total: {
       type: Number,
       required: true,
-      default: 0,
+      default: 0
     },
     pageSize: {
       type: Number,
-      default: 5,
+      default: 5
     },
     pageNo: {
       type: Number,
-      default: 1,
+      default: 1
     },
     continues: {
       type: Number,
-      default: 5,
-    },
+      default: 5
+    }
   },
-  data() {
-    return {};
+  data () {
+    return {}
   },
-  methods:{
-    pageNum(pageNo){
+  methods: {
+    pageNum (pageNo) {
       this.$emit('pageNum', pageNo)
     }
   },
   computed: {
-    startEnd() {
-      let start = 0;
-      let end = 0;
+    startEnd () {
+      let start = 0
+      let end = 0
 
       // 特殊情况：连续显示页码数大于总页码数
       if (this.continues > this.pageTotal) {
-        start = 1;
-        end = this.pageTotal;
+        start = 1
+        end = this.pageTotal
       } else {
         // 正常情况：计算连续显示，起始和结束的的页码数
-        start = this.pageNo - (this.continues - 1) / 2;
-        end = this.pageNo + (this.continues - 1) / 2;
+        start = this.pageNo - (this.continues - 1) / 2
+        end = this.pageNo + (this.continues - 1) / 2
         // 特殊情况：计算出的起始页码数小于1,则起始页码数设置为1，结束页码数等于连续显示页码数
         if (start < 1) {
-          start = 1;
-          end = this.continues;
+          start = 1
+          end = this.continues
         } // 特殊情况：计算出的结束页码数大于总页码数，则起始页码数等于总页码数减连续显示页码数+1，
         // 结束页码数等于总页码数
         else if (end > this.pageTotal) {
-          end = this.pageTotal;
-          start = end - this.continues + 1;
+          end = this.pageTotal
+          start = end - this.continues + 1
         }
       }
-      return { start, end };
+      return { start, end }
     },
 
     // 总页码数
-    pageTotal() {
+    pageTotal () {
       // 向上取整
-      return Math.ceil(this.total / this.pageSize);
-    },
-  },
-};
+      return Math.ceil(this.total / this.pageSize)
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

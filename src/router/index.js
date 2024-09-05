@@ -33,11 +33,23 @@ const routes = [
     path: '/search',
     name: 'Search',
     component: () => import('@/views/Search/index.vue')
+  },
+  {
+    path: '/detail/:skuId',
+    name: 'Detail',
+    component: () => import('@/views/Detail/index.vue')
   }
 ]
 
 const router = new VueRouter({
-  routes
+  routes,
+  scrollBehavior: (to, from, savedPosition) => {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { x: 0, y: 0 }
+    }
+  }
 })
 
 // 需要缓存修改的方法
