@@ -10,7 +10,7 @@
         "spuId": 1,
         "baseSaleAttrId": 1,
         "saleAttrValueName": "黑色",
-        "saleAttrName": "选择颜色",
+        "saleAttrName": "颜色",
         "isChecked": "0"
       },
       {
@@ -18,7 +18,7 @@
         "spuId": 1,
         "baseSaleAttrId": 1,
         "saleAttrValueName": "白色",
-        "saleAttrName": "选择颜色",
+        "saleAttrName": "颜色",
         "isChecked": "0"
       },
       {
@@ -26,7 +26,7 @@
         "spuId": 1,
         "baseSaleAttrId": 1,
         "saleAttrValueName": "红色",
-        "saleAttrName": "选择颜色",
+        "saleAttrName": "颜色",
         "isChecked": "1"
       },
       {
@@ -34,7 +34,7 @@
         "spuId": 1,
         "baseSaleAttrId": 1,
         "saleAttrValueName": "青",
-        "saleAttrName": "选择颜色",
+        "saleAttrName": "颜色",
         "isChecked": "0"
       }
     ]
@@ -50,7 +50,7 @@
         "spuId": 1,
         "baseSaleAttrId": 2,
         "saleAttrValueName": "64GB",
-        "saleAttrName": "选择版本",
+        "saleAttrName": "版本",
         "isChecked": "1"
       },
       {
@@ -58,7 +58,7 @@
         "spuId": 1,
         "baseSaleAttrId": 2,
         "saleAttrValueName": "128GB",
-        "saleAttrName": "选择版本",
+        "saleAttrName": "版本",
         "isChecked": "0"
       },
       {
@@ -66,7 +66,7 @@
         "spuId": 1,
         "baseSaleAttrId": 2,
         "saleAttrValueName": "256GB",
-        "saleAttrName": "选择版本",
+        "saleAttrName": "版本",
         "isChecked": "0"
       }
     ]

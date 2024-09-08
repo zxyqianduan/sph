@@ -38,6 +38,21 @@ const routes = [
     path: '/detail/:skuId',
     name: 'Detail',
     component: () => import('@/views/Detail/index.vue')
+  },
+  {
+    path: '/cart-success',
+    name: 'Cart-success',
+    component: () => import('@/views/AddCartSuccess/index.vue')
+  },
+  {
+    path: '/cart',
+    name: 'Cart',
+    component: () => import('@/views/ShopCart/index.vue')
+  },
+  {
+    path: '/test',
+    name: 'Test',
+    component: () => import('@/views/Test/test.vue')
   }
 ]
 

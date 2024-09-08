@@ -1,6 +1,7 @@
 # 2024-8-26-sph
 尚硅谷前台项目尚品汇商城练习<br>
 接口文档地址：https://www.showdoc.com.cn/2077491945864902/9419696081183301<br>
+接口基准地址需要使用：http://139.198.104.58:8200<br>
 项目技术栈：Vue2 + Vuex3 + Swiper + Mock + axios + Vue-router3 + animate.css<br>
 项目的静态页面素材在source-material分支拉取<br>
 此项目你可以练习到：<br>

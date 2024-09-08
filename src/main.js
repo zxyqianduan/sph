@@ -5,6 +5,7 @@ import store from './store'
 import 'animate.css'
 import plugins from '@/plugins/index'
 import '@/Mock/index'
+import '@/plugins/Element'
 
 // 引入全局样式
 import '@/assets/styles/reset.css'

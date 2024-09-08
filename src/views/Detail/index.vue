@@ -1,13 +1,13 @@
 <template>
   <div class="detail">
     <!-- 商品分类导航 -->
-    <TypeNav/>
+    <TypeNav />
 
     <!-- 主要内容区域 -->
     <section class="con">
       <!-- 导航路径区域 -->
       <div class="conPoin" v-if="goodsInfo.categoryView">
-        <span v-for="(item,index) in 3" :key="index">
+        <span v-for="(item, index) in 3" :key="index">
           {{ goodsInfo.categoryView[`category${item}Name`] }}
         </span>
       </div>
@@ -16,9 +16,9 @@
         <!-- 左侧放大镜区域 -->
         <div class="previewWrap">
           <!--放大镜效果-->
-          <Zoom :skuImg="goodsInfo.skuInfo.skuDefaultImg"/>
+          <Zoom :skuImg="goodsInfo.skuInfo.skuDefaultImg" />
           <!-- 小图列表 -->
-          <ImageList :imgList="goodsInfo.skuInfo.skuImageList"/>
+          <ImageList :imgList="goodsInfo.skuInfo.skuImageList" />
         </div>
         <!-- 右侧选择区域布局 -->
         <div class="InfoWrap">
@@ -27,7 +27,9 @@
             <p class="news">{{ goodsInfo.skuInfo.skuDesc }}</p>
             <div class="priceArea">
               <div class="priceArea1">
-                <div class="title">价&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;格</div>
+                <div class="title">
+                  价&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;格
+                </div>
                 <div class="price">
                   <i>¥</i>
                   <em>{{ goodsInfo.price }}</em>
@@ -40,15 +42,20 @@
                 </div>
                 <div class="fixWidth">
                   <i class="red-bg">加价购</i>
-                  <em
-                    class="t-gray">满999.00另加20.00元，或满1999.00另加30.00元，或满2999.00另加40.00元，即可在购物车换购热销商品</em>
+                  <em class="t-gray"
+                    >满999.00另加20.00元，或满1999.00另加30.00元，或满2999.00另加40.00元，即可在购物车换购热销商品</em
+                  >
                 </div>
               </div>
             </div>
             <div class="support">
               <div class="supportArea">
-                <div class="title">支&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;持</div>
-                <div class="fixWidth">以旧换新，闲置手机回收 4G套餐超值抢 礼品购</div>
+                <div class="title">
+                  支&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;持
+                </div>
+                <div class="fixWidth">
+                  以旧换新，闲置手机回收 4G套餐超值抢 礼品购
+                </div>
               </div>
               <div class="supportArea">
                 <div class="title">配 送 至</div>
@@ -62,21 +69,30 @@
               <div class="choosed"></div>
               <dl v-for="attr in spuSaleAttrList" :key="attr.id">
                 <dt class="title">选择{{ attr.saleAttrName }}</dt>
-                <dd v-for="attr2 in attr.spuSaleAttrValueList" :key="attr2.id" changepirce="0"
-                    @click="checkattr(attr,attr2.id)"
-                    :class="{active: attr2.isChecked === '1'}">
+                <dd
+                  v-for="attr2 in attr.spuSaleAttrValueList"
+                  :key="attr2.id"
+                  changepirce="0"
+                  @click="checkattr(attr, attr2.id)"
+                  :class="{ active: attr2.isChecked === '1' }"
+                >
                   {{ attr2.saleAttrValueName }}
                 </dd>
               </dl>
             </div>
             <div class="cartWrap">
               <div class="controls">
-                <input @change="testNum" autocomplete="off" class="itxt" v-model="num">
+                <input
+                  @change="testNum"
+                  autocomplete="off"
+                  class="itxt"
+                  v-model="num"
+                />
                 <a @click="countNum('add')" class="plus">+</a>
                 <a @click="countNum('minus')" class="mins">-</a>
               </div>
               <div class="add">
-                <a href="javascript:">加入购物车</a>
+                <a @click="addCart">加入购物车</a>
               </div>
             </div>
           </div>
@@ -107,7 +123,7 @@
               <li>
                 <div class="list-wrap">
                   <div class="p-img">
-                    <img src="./images/part01.png"/>
+                    <img src="./images/part01.png" />
                   </div>
                   <div class="attr">Apple苹果iPhone 6s (A1699)</div>
                   <div class="price">
@@ -122,7 +138,7 @@
               <li>
                 <div class="list-wrap">
                   <div class="p-img">
-                    <img src="./images/part02.png"/>
+                    <img src="./images/part02.png" />
                   </div>
                   <div class="attr">
                     <em>Apple苹果iPhone 6s (A1699)</em>
@@ -141,7 +157,7 @@
               <li>
                 <div class="list-wrap">
                   <div class="p-img">
-                    <img src="./images/part03.png"/>
+                    <img src="./images/part03.png" />
                   </div>
                   <div class="attr">
                     <em>Apple苹果iPhone 6s (A1699)</em>
@@ -160,7 +176,7 @@
               <li>
                 <div class="list-wrap">
                   <div class="p-img">
-                    <img src="./images/part02.png"/>
+                    <img src="./images/part02.png" />
                   </div>
                   <div class="attr">
                     <em>Apple苹果iPhone 6s (A1699)</em>
@@ -179,7 +195,7 @@
               <li>
                 <div class="list-wrap">
                   <div class="p-img">
-                    <img src="./images/part03.png"/>
+                    <img src="./images/part03.png" />
                   </div>
                   <div class="attr">
                     <em>Apple苹果iPhone 6s (A1699)</em>
@@ -207,49 +223,47 @@
           <h4 class="kt">选择搭配</h4>
           <div class="good-suits">
             <div class="master">
-              <img src="./images/l-m01.png"/>
+              <img src="./images/l-m01.png" />
               <p>￥5299</p>
               <i>+</i>
             </div>
             <ul class="suits">
               <li class="suitsItem">
-                <img src="./images/dp01.png"/>
+                <img src="./images/dp01.png" />
                 <p>Feless费勒斯VR</p>
                 <label>
-                  <input type="checkbox" value="39">
+                  <input type="checkbox" value="39" />
                   <span>39</span>
                 </label>
               </li>
               <li class="suitsItem">
-                <img src="./images/dp02.png"/>
+                <img src="./images/dp02.png" />
                 <p>Feless费勒斯VR</p>
                 <label>
-                  <input type="checkbox" value="50">
+                  <input type="checkbox" value="50" />
                   <span>50</span>
                 </label>
               </li>
               <li class="suitsItem">
-                <img src="./images/dp03.png"/>
+                <img src="./images/dp03.png" />
                 <p>Feless费勒斯VR</p>
                 <label>
-                  <input type="checkbox" value="59">
+                  <input type="checkbox" value="59" />
                   <span>59</span>
                 </label>
               </li>
               <li class="suitsItem">
-                <img src="./images/dp04.png"/>
+                <img src="./images/dp04.png" />
                 <p>Feless费勒斯VR</p>
                 <label>
-                  <input type="checkbox" value="99">
+                  <input type="checkbox" value="99" />
                   <span>99</span>
                 </label>
               </li>
             </ul>
             <div class="result">
               <div class="num">已选购0件商品</div>
-              <div class="price-tit">
-                套餐价
-              </div>
+              <div class="price-tit">套餐价</div>
               <div class="price">￥5299</div>
               <button class="addshopcar">加入购物车</button>
             </div>
@@ -258,29 +272,19 @@
         <div class="intro">
           <ul class="tab-wraped">
             <li class="active">
-              <a href="###">
-                商品介绍
-              </a>
+              <a href="###"> 商品介绍 </a>
             </li>
             <li>
-              <a href="###">
-                规格与包装
-              </a>
+              <a href="###"> 规格与包装 </a>
             </li>
             <li>
-              <a href="###">
-                售后保障
-              </a>
+              <a href="###"> 售后保障 </a>
             </li>
             <li>
-              <a href="###">
-                商品评价
-              </a>
+              <a href="###"> 商品评价 </a>
             </li>
             <li>
-              <a href="###">
-                手机社区
-              </a>
+              <a href="###"> 手机社区 </a>
             </li>
           </ul>
           <div class="tab-content">
@@ -302,9 +306,9 @@
                 <li>机身内存：64GB</li>
               </ul>
               <div class="intro-detail">
-                <img src="./images/intro01.png"/>
-                <img src="./images/intro02.png"/>
-                <img src="./images/intro03.png"/>
+                <img src="./images/intro01.png" />
+                <img src="./images/intro02.png" />
+                <img src="./images/intro03.png" />
               </div>
             </div>
             <div id="two" class="tab-pane">
@@ -327,69 +331,95 @@
 </template>
 
 <script>
-import ImageList from './ImageList/ImageList'
-import Zoom from './Zoom/Zoom'
-import { getDetail, getSpudata } from '@/api/detail'
+import ImageList from "./ImageList/ImageList";
+import Zoom from "./Zoom/Zoom";
+import { getDetail, getSpudata, reqAddToCart } from "@/api/detail";
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
-  name: 'Detail',
-  data () {
+  name: "Detail",
+  data() {
     return {
       goodsInfo: {}, // 商品详情
       spuSaleAttrList: [],
-      num: 1
-    }
+      num: 1,
+    };
   },
   components: {
     ImageList,
-    Zoom
+    Zoom,
   },
   methods: {
-    async getDetaildata () {
-      const { skuId } = this.$route.params
-      const res = await getDetail(skuId)
+    async getDetaildata() {
+      const { skuId } = this.$route.params;
+      const res = await getDetail(skuId);
       if (res.code === 200) {
-        this.goodsInfo = res.data
+        this.goodsInfo = res.data;
       }
     },
-    async getSpuDataList () {
-      this.spuSaleAttrList = await getSpudata()
+    async getSpuDataList() {
+      this.spuSaleAttrList = await getSpudata();
     },
-    checkattr (attr, attr2Id) {
-      attr.spuSaleAttrValueList.forEach(item => {
+    checkattr(attr, attr2Id) {
+      attr.spuSaleAttrValueList.forEach((item) => {
         if (attr2Id === item.id) {
-          item.isChecked = '1'
+          item.isChecked = "1";
         } else {
-          item.isChecked = '0'
+          item.isChecked = "0";
         }
-      })
+      });
     },
-    testNum (e) {
-      const { value } = e.target
-      const res = /^(1|[1-9][0-9]?|1[0-9]{2}|200)$/.test(value)
+    testNum(e) {
+      const { value } = e.target;
+      const res = /^(1|[1-9][0-9]?|1[0-9]{2}|200)$/.test(value);
       if (res) {
-        this.num = value
+        this.num = value;
       } else if (value > 200) {
-        this.num = 200
+        this.num = 200;
       } else {
-        this.num = 1
+        this.num = 1;
       }
     },
-    countNum (type) {
-      if (type === 'add' && this.num < 200) {
-        this.num++
-      } else if (type === 'minus' && this.num > 1) {
-        this.num--
+    countNum(type) {
+      if (type === "add" && this.num < 200) {
+        this.num++;
+      } else if (type === "minus" && this.num > 1) {
+        this.num--;
       }
-    }
-  },
-  mounted () {
-    this.getSpuDataList()
-    this.getDetaildata()
-  }
+    },
+    async addCart() {
+      const { skuId } = this.$route.params;
+      const { skuDefaultImg, price, skuName } = this.goodsInfo.skuInfo;
+      let arr = [];
+      this.spuSaleAttrList.forEach((item) => {
+        
+        item.spuSaleAttrValueList.forEach(item2 => {
+          if(item2.isChecked === '1'){
+          arr.push(item2.saleAttrName + '：' + item2.saleAttrValueName);
+        }
+        })
+        });
 
-}
+      const cartInfo = {
+        arr,
+        skuDefaultImg,
+        price,
+        skuName,
+        num: this.num,
+      };
+      
+      const res = await reqAddToCart(skuId, this.num);
+      localStorage.setItem("cartInfo", JSON.stringify(cartInfo));
+      if (res.code === 200) {
+        this.$router.push({ path: "/cart-success" });
+      }
+    },
+  },
+  mounted() {
+    this.getSpuDataList();
+    this.getDetaildata();
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -496,7 +526,6 @@ export default {
               }
             }
           }
-
         }
 
         .support {
@@ -805,7 +834,7 @@ export default {
             }
 
             .price {
-              color: #B1191A;
+              color: #b1191a;
               font-size: 16px;
               margin-bottom: 10px;
             }
@@ -882,7 +911,6 @@ export default {
               }
             }
           }
-
         }
       }
     }

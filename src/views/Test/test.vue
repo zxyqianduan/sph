@@ -1,57 +1,37 @@
 <template>
-  <div class="container">
-    <swiper class="swiper" :options="swiperOption">
-      <swiper-slide v-for="(item,index) in swiperList" :key="index">
-        <img :src="item">
-      </swiper-slide>
-      <div class="swiper-pagination" slot="pagination"></div>
-      <div class="swiper-button-prev" slot="button-prev"></div>
-      <div class="swiper-button-next" slot="button-next"></div>
-    </swiper>
-  </div>
-
+  <el-select v-model="value" placeholder="请选择">
+    <el-option
+      v-for="item in options"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value">
+    </el-option>
+  </el-select>
 </template>
 
 <script>
-import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
-import 'swiper/css/swiper.css'
-
-export default {
-  name: 'swiper-example-loop',
-  title: 'Loop mode / Infinite loop',
-  components: {
-    Swiper,
-    SwiperSlide
-  },
-  data () {
-    return {
-      swiperList: [
-        require('@/assets/images/home/banner1.jpg'),
-        require('@/assets/images/home/banner2.jpg'),
-        require('@/assets/images/home/banner3.jpg'),
-        require('@/assets/images/home/banner4.jpg')
-      ],
-      swiperOption: {
-        slidesPerView: 1,
-        spaceBetween: 30,
-        loop: true,
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true
-        },
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev'
-        }
+  export default {
+    name: "ElSelectDemo",
+    data() {
+      return {
+        options: [{
+          value: '选项1',
+          label: '黄金糕'
+        }, {
+          value: '选项2',
+          label: '双皮奶'
+        }, {
+          value: '选项3',
+          label: '蚵仔煎'
+        }, {
+          value: '选项4',
+          label: '龙须面'
+        }, {
+          value: '选项5',
+          label: '北京烤鸭'
+        }],
+        value: ''
       }
     }
   }
-}
 </script>
-
-<style lang="scss" scoped>
-.swiper {
-  width: 300px;
-  height: 300px;
-}
-</style>
