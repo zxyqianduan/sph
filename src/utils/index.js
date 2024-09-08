@@ -2,6 +2,7 @@ import axios from "axios";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import Getuuid from "./uuid";
+import { getToken } from "./storage";
 
 const request = axios.create({
   baseURL: "http://139.198.104.58:8200/",
@@ -13,8 +14,10 @@ const request = axios.create({
 
 // 添加请求拦截器
 request.interceptors.request.use(
-  (config) => {
+ 
+  (config) => {        
     config.headers["userTempId"] = Getuuid();
+    config.headers["token"] = getToken()
 
     // 在发送请求之前做些什么
     NProgress.start();

@@ -5,11 +5,14 @@
     <div class="top">
       <div class="container">
         <div class="loginList">
-          <p>尚品汇欢迎您！</p>
-          <p>
+          <p>尚品汇欢迎您 {{ userInfo.name }}</p>
+          <p v-if="!userInfo.name">
             <span>请</span>
             <router-link to="/login">登录</router-link>
             <router-link to="/register" class="register">免费注册</router-link>
+          </p>
+          <p v-else>
+            <a @click="Logout">退出登录</a>
           </p>
         </div>
         <div class="typeList">
@@ -28,14 +31,25 @@
     <div class="bottom">
       <h1 class="logoArea">
         <router-link class="logo" title="尚品汇" to="/">
-          <img src="@/assets/images/logo.png" alt="">
+          <img src="@/assets/images/logo.png" alt="" />
         </router-link>
       </h1>
       <div class="searchArea">
         <form @submit.prevent class="searchForm">
-          <input type="text" id="autocomplete" @keydown.enter="toSearch" class="input-error input-xxlarge"
-                 v-model.trim="keyword"/>
-          <button class="sui-btn btn-xlarge btn-danger" type="button" @click="toSearch">搜索</button>
+          <input
+            type="text"
+            id="autocomplete"
+            @keydown.enter="toSearch"
+            class="input-error input-xxlarge"
+            v-model.trim="keyword"
+          />
+          <button
+            class="sui-btn btn-xlarge btn-danger"
+            type="button"
+            @click="toSearch"
+          >
+            搜索
+          </button>
         </form>
       </div>
     </div>
@@ -43,41 +57,46 @@
 </template>
 
 <script>
+import { Loginout } from "@/api/login-register";
+import { removeToken } from "@/utils/storage";
+import { mapActions, mapState } from "vuex";
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
-  name: 'Header',
-  data () {
+  name: "Header",
+  data() {
     return {
-      keyword: ''
-    }
+      keyword: "",
+      name: "",
+    };
   },
   methods: {
-
-    toSearch () {
-      // const keyword = {
-      //   keyword: this.keyword || undefined
-      // }
-      // this.$router.push({
-      //   path: '/search',
-      //   query: {
-      //     ...Object.assign({}, this.$route.query, keyword)
-      //   }
-      // })
-
+    ...mapActions("user", ["loginOut"]),
+    toSearch() {
       this.$router.push({
-        path: '/search',
+        path: "/search",
         query: {
           ...this.$route.query,
-          keyword: this.keyword || undefined
-        }
-      })
-      this.keyword = undefined
-    }
-  }
-
-}
-
+          keyword: this.keyword || undefined,
+        },
+      });
+      this.keyword = undefined;
+    },
+    async Logout() {
+      this.loginOut();
+      this.$message({
+        type: "success",
+        message: "退出登录成功",
+      });
+      removeToken();
+      this.$router.push({ path: "/login" });
+    },
+  },
+  computed: {
+    ...mapState("user", ["userInfo"]),
+  },
+  mounted() {},
+};
 </script>
 
 <style lang="scss" scoped>
@@ -117,9 +136,7 @@ export default {
             border-left: 1px solid #b3aeae;
           }
         }
-
       }
-
     }
   }
 

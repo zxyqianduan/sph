@@ -17,8 +17,6 @@ import Rank from '@/views/Home/Rank'
 import Like from '@/views/Home/Like'
 import Floor from '@/views/Home/Floor'
 import Brand from '@/views/Home/Brand'
-import { mapActions } from 'vuex'
-
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Home',
@@ -31,10 +29,10 @@ export default {
     Brand
   },
   methods: {
-    ...mapActions('home', ['getCategory'])
+    
   },
   mounted () {
-    this.getCategory()
+    
   }
 }
 </script>
