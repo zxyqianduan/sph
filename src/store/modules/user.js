@@ -17,6 +17,9 @@ const user = {
      const res = await userInfo()
      if(res.code === 200){
       context.commit('setUserInfo',res.data)
+      localStorage.setItem('userInfo',JSON.stringify(res.data))
+     }else{
+      return Promise.reject(new Error())
      }
     },
 
@@ -26,6 +29,7 @@ const user = {
      if(res.code === 200){
       removeToken()
       context.commit('setUserInfo','')
+      return 'ok'
      }
     }
   },

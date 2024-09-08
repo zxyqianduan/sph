@@ -57,7 +57,6 @@
 </template>
 
 <script>
-import { Loginout } from "@/api/login-register";
 import { removeToken } from "@/utils/storage";
 import { mapActions, mapState } from "vuex";
 
@@ -83,11 +82,12 @@ export default {
       this.keyword = undefined;
     },
     async Logout() {
-      this.loginOut();
-      this.$message({
-        type: "success",
-        message: "退出登录成功",
-      });
+      const res = await this.loginOut();
+      if (res === "ok")
+        this.$message({
+          type: "success",
+          message: "退出登录成功",
+        });
       removeToken();
       this.$router.push({ path: "/login" });
     },

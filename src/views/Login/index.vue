@@ -22,7 +22,7 @@
                   placeholder="请输入密码"
                 />
               </div>
-              <button class="btn" @click="login">登&nbsp;&nbsp;录</button>
+              <button class="btn" @keydown.enter="login" @click="login">登&nbsp;&nbsp;录</button>
             </form>
             <div class="call clearFix">
               <router-link class="register" to="/register"
@@ -52,11 +52,12 @@
 </template>
 
 <script>
-import { Login } from '@/api/login-register';
-import { saveToken } from '@/utils/storage';
-import { mapActions } from 'vuex';
+import { Login } from "@/api/login-register";
+import { saveToken } from "@/utils/storage";
+import { mapActions } from "vuex";
 
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: "Login",
   data() {
     return {
@@ -65,7 +66,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions('user',['getuserInfo']),
+    ...mapActions("user", ["getuserInfo"]),
     // 登录
     async login() {
       const params = {
@@ -79,8 +80,8 @@ export default {
           type: "success",
           message: "登录成功",
         });
-        this.$router.push("/")
-        this.getuserInfo()
+        this.$router.push("/");
+        this.getuserInfo();
       } else {
         this.$message({
           type: "error",
