@@ -98,7 +98,7 @@ export default {
       const res = await LgoinRegister(params);
       if (res.code === 200) {
         this.$message({
-          message: "注册成功",
+          message: "注册账号成功",
           type: "success",
         });
         this.$router.push("/login");

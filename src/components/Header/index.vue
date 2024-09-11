@@ -84,11 +84,6 @@ export default {
     async Logout() {
       const res = await this.loginOut();
       if (res === "ok")
-        this.$message({
-          type: "success",
-          message: "退出登录成功",
-        });
-      removeToken();
       this.$router.push({ path: "/login" });
     },
   },

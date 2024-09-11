@@ -81,7 +81,6 @@ export default {
           message: "登录成功",
         });
         this.$router.push("/");
-        this.getuserInfo();
       } else {
         this.$message({
           type: "error",

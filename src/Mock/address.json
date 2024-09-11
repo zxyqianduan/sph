@@ -1,0 +1,35 @@
+[  
+    {  
+        "id": 1,  
+        "userAddress": "海南省三沙市南沙群岛永暑岛",  
+        "userId": 1001,  
+        "provinceId": 1,  
+        "consignee": "余欣宜",  
+        "phoneNum": "18476810397",  
+        "isDefault": "1",  
+        "regionId": "1",  
+        "fullAddress": "海南省三沙市南沙群岛永暑岛"  
+    },  
+    {  
+        "id": 2,  
+        "userAddress": "北京市市辖区延庆区珍珠泉乡",  
+        "userId": 1002,  
+        "provinceId": 1,  
+        "consignee": "乔苒溪",  
+        "phoneNum": "18075376042",  
+        "isDefault": "0",  
+        "regionId": "1",  
+        "fullAddress": "北京市市辖区延庆区珍珠泉乡"  
+    },  
+    {  
+        "id": 3,  
+        "userAddress": "青海省黄南藏族自治州尖扎县当顺乡",  
+        "userId": 1003,  
+        "provinceId": 1,  
+        "consignee": "魏翔",  
+        "phoneNum": "16697252796",  
+        "isDefault": "0",  
+        "regionId": "1",  
+        "fullAddress": "青海省黄南藏族自治州尖扎县当顺乡 青海化工大学"  
+    } 
+]

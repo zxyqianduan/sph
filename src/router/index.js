@@ -53,6 +53,21 @@ const routes = [
     component: () => import("@/views/ShopCart/index.vue"),
   },
   {
+    path: '/trade',
+    name: 'Trade',
+    component: () => import("@/views/Trade/index.vue"),
+  },
+  {
+    path: '/pay',
+    name: 'Pay',
+    component: () => import("@/views/Pay/index.vue"),
+  },
+  {
+    path: '/paySuccess',
+    name: 'PaySuccess',
+    component: () => import("@/views/PaySuccess/index.vue"),
+  },
+  {
     path: "/test",
     name: "Test",
     component: () => import("@/views/Test/test.vue"),
@@ -69,7 +84,7 @@ const router = new VueRouter({
     }
   },
 });
-const whiteList = ['/login']
+const whiteList = ['/cart-success', '/cart','/pay','/paysuccess']
 
 router.beforeEach(async (to, from, next) => {
   const token = getToken();
@@ -82,12 +97,13 @@ router.beforeEach(async (to, from, next) => {
         await store.dispatch("user/getuserInfo");
         next();
       } catch (error) {
+        console.log(error);
         Message.error('登录失效,请重新登录');
         removeToken();
         next("/login");
       }
     }
-  } else if(whiteList.includes(to.path)) {
+  } else if(!whiteList.includes(to.path)) {  
     next()
   }else {
     Message.error('未登录,请先登录')
