@@ -80,7 +80,13 @@
               >
                 <div class="list-wrap" @click="toDetail(item.id)">
                   <div class="p-img">
-                    <a><img :src="item.defaultImg" alt="" /></a>
+                    <a>
+<!--                      <img class="lazyload"-->
+<!--                           :data-src="item.defaultImg"-->
+<!--                           src='./images/image.png'-->
+<!--                           alt="" />-->
+                      <img v-lazy="item.defaultImg" alt="" />
+                    </a>
                   </div>
                   <div class="price">
                     <strong>
@@ -123,7 +129,6 @@
 <script>
 import SearchSelector from './SearchSelector'
 import { mapState } from 'vuex'
-
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Search',

@@ -7,7 +7,9 @@ import plugins from '@/plugins/index'
 import '@/Mock/index'
 import '@/plugins/Element'
 import './plugins/validate.js'
-
+// import 'lazysizes'
+// import 'lazysizes/plugins/parent-fit/ls.parent-fit'
+import '@/plugins/lazyload.js'
 // 引入全局样式
 import '@/assets/styles/reset.css'
 
