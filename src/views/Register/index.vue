@@ -8,40 +8,46 @@
           >我有账号，去 <router-link to="/login">登录</router-link>
         </span>
       </h3>
-      <div class="content">
-        <label>手机号:</label>
-        <input type="text" v-model="Phone" placeholder="请输入你的手机号" />
-        <!-- <span class="error-msg">错误提示信息</span> -->
-      </div>
-      <div class="content">
-        <label>验证码:</label>
-        <input type="text" v-model="Code" placeholder="请输入验证码" />
-        <button class="getcode" @click="sendCode">获取验证码</button>
-        <!-- <span class="error-msg">错误提示信息</span> -->
-      </div>
-      <div class="content">
-        <label>登录密码:</label>
-        <input
-          type="text"
-          v-model="Password"
-          placeholder="请输入你的登录密码"
-        />
-        <!-- <span class="error-msg">错误提示信息</span> -->
-      </div>
-      <div class="content">
-        <label>确认密码:</label>
-        <input
-          type="text"
-          v-model="ConfirmPassword"
-          placeholder="请输入确认密码"
-        />
-        <!-- <span class="error-msg">错误提示信息</span> -->
-      </div>
-      <div class="controls">
-        <input v-model="isAgree" name="m1" type="checkbox" />
-        <span>同意协议并注册《尚品汇用户协议》</span>
-        <!-- <span class="error-msg">错误提示信息</span> -->
-      </div>
+
+        <div class="content">
+          <label>手机号:</label>
+          <input v-validate="{phone: true,required:true}" type='text' name="phone" v-model="Phone" placeholder="请输入你的手机号" />
+          <span class="error-msg">{{ errors.first('phone')}}</span>
+        </div>
+        <div class="content">
+          <label>验证码:</label>
+          <input v-validate="{code: true,required:true}" type="text" name="code" v-model="Code" placeholder="请输入验证码" />
+          <button class="getcode" @click="sendCode">获取验证码</button>
+          <span class="error-msg">{{errors.first('code')}}</span>
+        </div>
+        <div class="content">
+          <label>登录密码:</label>
+          <input
+            v-validate="{pwd: true,required:true}"
+            type="password"
+            name="pwd"
+            v-model="Password"
+            placeholder="请输入你的登录密码"
+          />
+          <span class="error-msg">{{errors.first('pwd')}}</span>
+        </div>
+        <div class="content">
+          <label>确认密码:</label>
+          <input
+            v-validate="{required:true,'确认密码':Password}"
+            type="password"
+            name="确认密码"
+            v-model="ConfirmPassword"
+            placeholder="请输入确认密码"
+          />
+          <span class="error-msg">{{errors.first('确认密码')}}</span>
+        </div>
+        <div class="controls">
+          <input v-validate="{isagree: true,required:true}" v-model="isAgree" name="isagree" type="checkbox" />
+          <span>同意协议并注册《尚品汇用户协议》</span>
+          <span class="error-msg">{{errors.first('isagree')}}</span>
+        </div>
+
       <div class="btn">
         <button @click="register">完成注册</button>
       </div>
@@ -66,46 +72,50 @@
 </template>
 
 <script>
-import { LgoinRegister, sendcode } from "@/api/login-register";
+import { LgoinRegister, sendcode } from '@/api/login-register'
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
-  name: "Register",
-  data() {
+  name: 'Register',
+  data () {
     return {
-      Phone: "", // 手机号
-      Code: "", // 验证码
-      Password: "", // 登录密码
-      ConfirmPassword: "", // 确认密码
-      isAgree: "", // 是否同意协议
-    };
+      Phone: '', // 手机号
+      Code: '', // 验证码
+      Password: '', // 登录密码
+      ConfirmPassword: '', // 确认密码
+      isAgree: '' // 是否同意协议
+    }
   },
   methods: {
     // 发送验证码
-    async sendCode() {
-      const res = await sendcode(this.Phone);
+    async sendCode () {
+      const res = await sendcode(this.Phone)
       if (res.code === 200) {
-        this.Code = res.data;
+        this.Code = res.data
       }
     },
     // 注册账号
-    async register() {
+    async register () {
+      const valide = await this.$validator.validateAll()
+      console.log(valide)
       const params = {
         phone: this.Phone,
         code: this.Code,
-        password: this.Password,
-      };
-      const res = await LgoinRegister(params);
-      if (res.code === 200) {
-        this.$message({
-          message: "注册账号成功",
-          type: "success",
-        });
-        this.$router.push("/login");
+        password: this.Password
       }
-    },
-  },
-};
+      if (valide) {
+        const res = await LgoinRegister(params)
+        if (res.code === 200) {
+          this.$message({
+            message: '注册账号成功',
+            type: 'success'
+          })
+          await this.$router.push('/login')
+        }
+      }
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

@@ -6,6 +6,7 @@ import 'animate.css'
 import plugins from '@/plugins/index'
 import '@/Mock/index'
 import '@/plugins/Element'
+import './plugins/validate.js'
 
 // 引入全局样式
 import '@/assets/styles/reset.css'

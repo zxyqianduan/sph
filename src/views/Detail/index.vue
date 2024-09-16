@@ -331,95 +331,94 @@
 </template>
 
 <script>
-import ImageList from "./ImageList/ImageList";
-import Zoom from "./Zoom/Zoom";
-import { getDetail, getSpudata, reqAddToCart } from "@/api/detail";
+import ImageList from './ImageList/ImageList'
+import Zoom from './Zoom/Zoom'
+import { getDetail, getSpudata, reqAddToCart } from '@/api/detail'
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
-  name: "Detail",
-  data() {
+  name: 'Detail',
+  data () {
     return {
       goodsInfo: {}, // 商品详情
       spuSaleAttrList: [],
-      num: 1,
-    };
+      num: 1
+    }
   },
   components: {
     ImageList,
-    Zoom,
+    Zoom
   },
   methods: {
-    async getDetaildata() {
-      const { skuId } = this.$route.params;
-      const res = await getDetail(skuId);
+    async getDetaildata () {
+      const { skuId } = this.$route.params
+      const res = await getDetail(skuId)
       if (res.code === 200) {
-        this.goodsInfo = res.data;
+        this.goodsInfo = res.data
       }
     },
-    async getSpuDataList() {
-      this.spuSaleAttrList = await getSpudata();
+    async getSpuDataList () {
+      this.spuSaleAttrList = await getSpudata()
     },
-    checkattr(attr, attr2Id) {
+    checkattr (attr, attr2Id) {
       attr.spuSaleAttrValueList.forEach((item) => {
         if (attr2Id === item.id) {
-          item.isChecked = "1";
+          item.isChecked = '1'
         } else {
-          item.isChecked = "0";
+          item.isChecked = '0'
         }
-      });
+      })
     },
-    testNum(e) {
-      const { value } = e.target;
-      const res = /^(1|[1-9][0-9]?|1[0-9]{2}|200)$/.test(value);
+    testNum (e) {
+      const { value } = e.target
+      const res = /^(1|[1-9][0-9]?|1[0-9]{2}|200)$/.test(value)
       if (res) {
-        this.num = value;
+        this.num = value
       } else if (value > 200) {
-        this.num = 200;
+        this.num = 200
       } else {
-        this.num = 1;
+        this.num = 1
       }
     },
-    countNum(type) {
-      if (type === "add" && this.num < 200) {
-        this.num++;
-      } else if (type === "minus" && this.num > 1) {
-        this.num--;
+    countNum (type) {
+      if (type === 'add' && this.num < 200) {
+        this.num++
+      } else if (type === 'minus' && this.num > 1) {
+        this.num--
       }
     },
-    async addCart() {
-      const { skuId } = this.$route.params;
-      const { skuDefaultImg, price, skuName } = this.goodsInfo.skuInfo;
-      let arr = [];
+    async addCart () {
+      const { skuId } = this.$route.params
+      const { skuDefaultImg, price, skuName } = this.goodsInfo.skuInfo
+      const arr = []
       this.spuSaleAttrList.forEach((item) => {
-        
         item.spuSaleAttrValueList.forEach(item2 => {
-          if(item2.isChecked === '1'){
-          arr.push(item2.saleAttrName + '：' + item2.saleAttrValueName);
-        }
+          if (item2.isChecked === '1') {
+            arr.push(item2.saleAttrName + '：' + item2.saleAttrValueName)
+          }
         })
-        });
+      })
 
       const cartInfo = {
         arr,
         skuDefaultImg,
         price,
         skuName,
-        num: this.num,
-      };
-      
-      const res = await reqAddToCart(skuId, this.num);
-      localStorage.setItem("cartInfo", JSON.stringify(cartInfo));
-      if (res.code === 200) {
-        this.$router.push({ path: "/cart-success" });
+        num: this.num
       }
-    },
+
+      const res = await reqAddToCart(skuId, this.num)
+      localStorage.setItem('cartInfo', JSON.stringify(cartInfo))
+      if (res.code === 200) {
+        this.$router.push({ path: '/cart-success' })
+      }
+    }
   },
-  mounted() {
-    this.getSpuDataList();
-    this.getDetaildata();
-  },
-};
+  mounted () {
+    this.getSpuDataList()
+    this.getDetaildata()
+  }
+}
 </script>
 
 <style lang="scss" scoped>

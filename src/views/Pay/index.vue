@@ -74,7 +74,7 @@
         <div class="hr"></div>
 
         <div class="submit">
-          <router-link class="btn" to="/paysuccess">立即支付</router-link>
+          <a class="btn" @click="payment">立即支付</a>
         </div>
         <div class="otherpay">
           <div class="step-tit">
@@ -91,16 +91,49 @@
 </template>
 
 <script>
-
-
+import QRCode from "qrcode";
 export default {
   name: "Pay",
   methods: {
-  
-  },
-  mounted() {
+    async payment() {
+      try {
+        // qrcode转换二维码返回base64格式
+        const url = await QRCode.toDataURL("https://2o6npo.58u.cn/a/O9DoK7e/");
 
+        // 支付二维码
+        const imgUrl = `<img style="width:200px;height:200px" src=${url} alt="微信支付二维码">`;
+
+        // 弹窗配置对象
+        const options = {
+          dangerouslyUseHTMLString: true,
+          showCancelButton: true,
+          center: true,
+          cancelButtonText: "支付遇到问题",
+          confirmButtonText: "已完成支付",
+        };
+        // 弹窗
+        this.$alert(imgUrl, "微信扫码支付", options)
+          .then((action) => {
+            if (action === "confirm") {
+              this.$message({
+                type: "success",
+                message: "支付成功！",
+              });
+              this.$router.push({ path: "/paySuccess" });
+            }
+          })
+          .catch((instance) => {
+            if (instance === "cancel") {
+              this.$message({
+                type: "error",
+                message: "支付接口挂了没办法做下去了，交友QQ1427926873",
+              });
+            }
+          });
+      } catch (error) {}
+    },
   },
+  mounted() {},
 };
 </script>
 

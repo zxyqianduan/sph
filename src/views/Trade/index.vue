@@ -143,7 +143,9 @@ export default {
     },
     getpay() {
       console.log(this.orderDetailList);
-      this.$router.push({ name: "Pay" });
+      this.$router.push({ name: "Pay" ,query:{
+        orderId:'7069'
+      }});
     },
     async getOrder(){
       const tradeNo = this.tradeDataList.tradeNo;

@@ -33,3 +33,12 @@ export const MockAddressList = () => {
 export const getsuborder = (tradeNo, params) => {
   return request.post(`/api/order/auth/submitOrder?tradeNo=${tradeNo}`, params);
 };
+
+/**
+ * @description 获取订单支付信息
+ * @param {string} orderId  支付订单ID(通过提交订单得到)
+ * @returns 
+ */
+export const getPayment = (orderId) => {
+  return request.get(`/api/payment/weixin/createNative/${orderId}`);
+}
